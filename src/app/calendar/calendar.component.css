@@ -49,3 +49,6 @@ td, th{
 .holi-govt{
     background-color: lightpink;
 }
+.li{
+    cursor: pointer;
+}

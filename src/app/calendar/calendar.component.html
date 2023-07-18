@@ -17,7 +17,16 @@
 				</tr>
 				<tr *ngFor="let month of allMonths">
 					<th class="month p-1">{{month.name}}</th>
-					<td class="days p-1 text-center" *ngFor="let day of month.days" (click)="markHoliday(day)" [ngStyle]="dayColor(day)">{{day}}</td>
+					<td class="days p-1 text-center" *ngFor="let day of month.days" (click)="toggleList($event)" [ngStyle]="dayColor(day)">
+						<ng-container *ngIf="!(day.includes('Sun') || day.includes('Sat'))">
+							<ul class="list-group p-1" *ngIf="showList">
+							  <li class="list-group-item p-1 text-success" (click)="selectValue(day, 'P')">P</li>
+                <li class="list-group-item p-1 text-danger" (click)="selectValue(day, 'A')">A</li>
+						    <li class="list-group-item p-1 text-warning" (click)="selectValue(day, 'GH')">G</li>
+							</ul>
+							{{day.slice(15,16)}}
+						</ng-container>
+					</td>
 				</tr>
 			</tbody>
 		</table>
@@ -34,4 +43,20 @@
 			</div>
 		</div>
 	</div>
+	<div class="row mt-4 justify-content-center">
+		<div class="colorCode d-flex col-md-6 justify-content-around text-primary">
+			<div>
+				<span>P: </span>
+				<span>Present</span>
+			</div>
+			<div>
+				<span class="mt-1">A: </span>
+				<span>Absent</span>
+			</div>
+			<div>
+				<span>GH: </span>
+				<span>Govt. Holliday</span>
+			</div>
+		</div>
+  </div>
 </div>
