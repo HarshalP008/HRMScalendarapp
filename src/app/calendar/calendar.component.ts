@@ -74,7 +74,7 @@ export class CalendarComponent implements OnInit{
     return {'background-color' : (( day.includes("Sat") || day.includes("Sun")) ? 'lightgreen' : day.includes('G')? 'lightpink' :'smokewhite')}
   }
   nextYear() {
-    // this.allMonths={};
+    this.allMonths={};
     this.currentYear += 1;
     this.getmonthDays();
   }
