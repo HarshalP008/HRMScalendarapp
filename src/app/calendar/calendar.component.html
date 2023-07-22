@@ -1,11 +1,11 @@
-<div class="container mt-2">
+<div class="container mt-3">
 	<div class="row">
-		<table class="table table-responsive table-bordered" width="100%">
+		<table class="table table-responsive table-bordered">
 			<thead>
 				<tr class="text-sm-center">
 					<th colspan="100%" class="year">
 						<i class="fa fa-caret-square-o-left p-1 mr-2 text-primary" aria-hidden="true" (click)="prevYear()"></i>
-						<span class="m-2 pl-2 pr-2 border border-secondary bg-warning currentYear">{{+currentYear}}</span>
+						<span class="m-2 px-2 border border-secondary bg-warning currentYear">{{+currentYear}}</span>
 						<i class="fa fa-caret-square-o-right p-1 ml-2 text-primary" aria-hidden="true" (click)="nextYear()"></i>
 					</th>
 				</tr>
@@ -13,25 +13,27 @@
 			<tbody>
 				<tr>
 					<th class="month text-center p-1">M\D</th>
-					<td class="headerDays p-1 text-center" *ngFor="let date of datesArr">{{date | number:'2.0'}}</td>
+					<td class="headerDays p-1 text-center" *ngFor="let date of datesArr"><b>{{date | number:'2.0'}}</b></td>
 				</tr>
 				<tr *ngFor="let month of allMonths">
 					<th class="month p-1">{{month.name}}</th>
-					<td class="days p-1 text-center" *ngFor="let day of month.days" (click)="toggleList($event)" [ngStyle]="dayColor(day)">
-						<ng-container *ngIf="!(day.includes('Sun') || day.includes('Sat'))">
-							<ul class="list-group p-1" *ngIf="showList">
-							  <li class="list-group-item p-1 text-success" (click)="selectValue(day, 'P')">P</li>
-                <li class="list-group-item p-1 text-danger" (click)="selectValue(day, 'A')">A</li>
-						    <li class="list-group-item p-1 text-warning" (click)="selectValue(day, 'GH')">G</li>
+					<td class="days p-1 text-center" *ngFor="let day of month.days" (click)="toggleList($event); openPopup(day)"
+						data-bs-toggle="modal" data-bs-target="#statusUpModal" [ngStyle]="dayColor(day)">
+						<!-- <ng-container>
+							<ul class="list-group p-1" *ngIf="showList && !(day.includes('Sun') || day.includes('Sat'))">
+								<li class="list-group-item p-1 text-success" (click)="selectValue(day, 'P')">P</li>
+								<li class="list-group-item p-1 text-danger" (click)="selectValue(day, 'A')">A</li>
+								<li class="list-group-item p-1 text-warning" (click)="selectValue(day, 'G')">G</li>
 							</ul>
-							{{day.slice(15,16)}}
-						</ng-container>
+							<small>{{day.slice(15,16)}}</small>
+						</ng-container> -->
+						<h6>{{day.slice(15,16)}}</h6>
 					</td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
-	<div class="row mt-4 justify-content-center">
+	<div class="row my-3 justify-content-center">
 		<div class="colorCode d-flex col-md-6 justify-content-around">
 			<div class="weekEnds mr-4">
 				<div class="square holi-we mt-1"></div>
@@ -43,7 +45,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="row mt-4 justify-content-center">
+	<div class="row justify-content-center">
 		<div class="colorCode d-flex col-md-6 justify-content-around text-primary">
 			<div>
 				<span>P: </span>
@@ -54,9 +56,29 @@
 				<span>Absent</span>
 			</div>
 			<div>
-				<span>GH: </span>
+				<span>G: </span>
 				<span>Govt. Holliday</span>
 			</div>
 		</div>
-  </div>
+	</div>
+	<ng-container  *ngIf="showList && !(selDate.includes('Sun') || selDate.includes('Sat'))">
+		<div [ngStyle]="{'display':displayStyle}">
+			<div class="modal-dialog modal-sm" id="statusUpModal" class="modalStyle">
+				<div class="modal-content">
+						<p class="text-primary bg-dark">{{selDate.slice(0,15)}} </p>
+						<small class="text-secondary">Select/Update Status: {{status}}</small>
+					<div class="modal-body">
+						<ul class="list-group">
+							<li class="list-group-item text-success pl-2" (click)="selectValue(selDate, 'P')">P-Present</li>
+							<li class="list-group-item text-danger pl-2" (click)="selectValue(selDate, 'A')">A-Absent</li>
+							<li class="list-group-item text-warning pl-2" (click)="selectValue(selDate, 'G')">G-Govt. Holiday</li>
+						</ul>
+					</div>
+					<div class="modal-footer justify-content-center">
+						<button type="button" class="btn btn-small btn-primary my-1" (click)="closePopup()" data-dismiss="modal"><small>Close</small></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ng-container>
 </div>
