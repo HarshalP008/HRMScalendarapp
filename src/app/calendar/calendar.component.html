@@ -60,25 +60,5 @@
 				<span>Govt. Holliday</span>
 			</div>
 		</div>
-	</div>
-	<ng-container  *ngIf="showList && !(selDate.includes('Sun') || selDate.includes('Sat'))">
-		<div [ngStyle]="{'display':displayStyle}">
-			<div class="modal-dialog modal-sm" id="statusUpModal" class="modalStyle">
-				<div class="modal-content">
-						<p class="text-primary bg-dark">{{selDate.slice(0,15)}} </p>
-						<small class="text-secondary">Select/Update Status: {{status}}</small>
-					<div class="modal-body">
-						<ul class="list-group">
-							<li class="list-group-item text-success pl-2" (click)="selectValue(selDate, 'P')">P-Present</li>
-							<li class="list-group-item text-danger pl-2" (click)="selectValue(selDate, 'A')">A-Absent</li>
-							<li class="list-group-item text-warning pl-2" (click)="selectValue(selDate, 'G')">G-Govt. Holiday</li>
-						</ul>
-					</div>
-					<div class="modal-footer justify-content-center">
-						<button type="button" class="btn btn-small btn-primary my-1" (click)="closePopup()" data-dismiss="modal"><small>Close</small></button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</ng-container>
+  </div>
 </div>
